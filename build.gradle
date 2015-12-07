@@ -32,7 +32,25 @@ dependencies {
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.projectlombok:lombok')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
+    compile 'com.google.guava:guava:18.0'
+    compile 'org.springframework.security:spring-security-openid:4.0.3.RELEASE'
+    compile 'org.webjars:bootstrap:3.3.5'
+    compile 'org.webjars:jquery:2.1.4'
+    compile 'org.webjars:jquery-ui:1.11.4'
+    compile 'org.webjars:jquery-ui-themes:1.11.4'
+    compile ("org.webjars.bower:jquery.bootgrid:1.2.0") {
+        exclude group: 'org.webjars.bower'
+    }
+    
+    compile 'net.sf.ehcache:ehcache-core:2.6.11'
+    compile('com.h2database:h2')
     testCompile('org.springframework.boot:spring-boot-starter-test') 
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
 }
@@ -41,6 +59,20 @@ dependencyManagement {
 	imports { 
 		mavenBom "org.springframework.cloud:spring-cloud-starter-parent:Brixton.M3" 
 	}
+}
+configurations {
+    all*.exclude group: "commons-logging", module: "commons-logging"
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'org.springframework') {
+            details.useVersion '4.2.3.RELEASE'
+        }
+        if (details.requested.group == 'org.hibernate') {
+            details.useVersion '5.0.2.Final'
+        }
+    }
 }
 
 
